@@ -1,0 +1,87 @@
+<html>
+<title>JavaScript Neural Networks</title>
+<body>
+
+<div id=controlDiv>
+	<button id=finishButt style="font-size:130%;padding:.5em;z-index:10">FINISH</button>
+</div>
+<div id=surveyDiv style="display:none;top:10%;position:fixed;margin:auto;width:100%;background-color:white;padding:1em;text-align:center">
+	<div style="margin:auto;text-align:center">How did you enjoy your experience with this particular toy?</div>
+	<form action="" style="margin:auto;width:5em;text-align:left">
+		<input type="radio" name="survey" value="3/3">Good<br>
+		<input type="radio" name="survey" value="2/3">Neutral<br>
+		<input type="radio" name="survey" value="1/3">Bad
+	</form>
+	<button id=submitButt style="font-size:110%;padding:.2em">SUBMIT</button>
+</div>
+
+<div id=playDiv style="height:80%">
+		
+</div>
+
+</body>
+
+<script type="application/javascript" src="./activationFunction.js"></script>
+<script type="application/javascript" src="./annBasics.js"></script>
+
+<script>
+	function el(e) {return document.getElementById(e);}
+	function oneOf(v) {return v[randomInt(v.length)];}
+	function isNan(x) {return x == null || !(Math.abs(x) >= 0);}
+	function contains(x, array) {
+		for (var i = 0; i < array.length; i++) if (array[i] == x) return true;
+		return false;
+	}
+	function indexOf(x, array) {
+		for (var i = 0; i < array.length; i++) if (array[i] == x) return i;
+		return -1;
+	}
+	function randomInt(max) {
+		return Math.floor(Math.random() * max);
+	}
+	function compareArrays(a1, a2) {
+		if (a1.length != a2.length) return false;
+		for (var i = 0; i < a1.length; i++) {
+			if (a1[i] instanceof Array && a2[i] instanceof Array) {
+				if (!compareArrays(a1[i], a2[i])) return false;
+			}
+			else if (a1[i] != a2[i]) return false;
+		}
+		return true;
+	}
+	function sigmoid(x) {
+		return 1 / (1 + Math.exp(-x));
+	}
+	function randWgt() {
+		return Math.round((Math.random() - 0.5) * 2);
+	}
+	function getCheckedValue(groupName) {
+	    var radios = document.getElementsByName(groupName);
+	    for (i = 0; i < radios.length; i++) {
+	        if (radios[i].checked) {
+	            return radios[i].value;
+	        }
+	    }
+	    return null;
+	}
+
+	COLS = 25;
+	ROWS = 10;
+	WRAP = true;
+	DIAG_NEIGBS = false;
+	WGT_POOL_SIZE = 5;
+	NUM_OBJ_CLASSES = 3;
+	DECAY = 1;
+	ANIMATION_SPEED = 300;
+	SELFOK = true;
+	HYPERMODELER = createFFNeuralNetwork(2, [8, 8], WGT_POOL_SIZE);
+</script>
+
+<script type="application/javascript" src="./evolution.js"></script>
+<script type="application/javascript" src="./gameScreen.js"></script>
+<script type="application/javascript" src="./perceptronCellGame.js"></script>
+<script type="application/javascript" src="./hyperModeler.js"></script>
+<script type="application/javascript" src="./fitness.js"></script>
+<script type="application/javascript" src="./init.js"></script>
+
+</html>
